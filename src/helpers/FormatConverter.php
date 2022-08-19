@@ -65,11 +65,11 @@ class FormatConverter extends \yii\helpers\FormatConverter
      *
      * @param string $pattern date format pattern in ICU format.
      * @param string $type 'date', 'time', or 'datetime'.
-     * @param string|null $locale the locale to use for converting ICU short patterns `short`, `medium`, `long` and `full`.
+     * @param string $locale the locale to use for converting ICU short patterns `short`, `medium`, `long` and `full`.
      * If not given, `Yii::$app->language` will be used.
      * @return string The converted date format pattern.
      */
-    public static function convertDateIcuToMoment(string $pattern, string $type = 'date', string $locale = null): string
+    public static function convertDateIcuToMoment($pattern, $type = 'date', $locale = null)
     {
         if (isset(self::$_icuShortFormats[$pattern])) {
             if (extension_loaded('intl')) {
@@ -96,7 +96,6 @@ class FormatConverter extends \yii\helpers\FormatConverter
                 $escaped[$match] = $match;
             }
         }
-
         return strtr($pattern, array_merge($escaped, [
             'G' => '',        // era designator like (Anno Domini)
             'Y' => 'GGGG',    // 4digit year of "Week of Year"

@@ -1,4 +1,3 @@
-/* globals jQuery:false */
 window.yii.sa = (function ($) {
     var pub = {
         isActive: true,

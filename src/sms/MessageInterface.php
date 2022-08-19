@@ -33,14 +33,14 @@ interface MessageInterface
      * Returns the region of this message.
      * @return string the region of this message.
      */
-    public function getRegion(): string;
+    public function getRegion();
 
     /**
      * Sets the region of this message (e.g. 'CH' for Switzerland). This is important for number parsing.
      * @param string $region region name.
      * @return $this self reference.
      */
-    public function setRegion(string $region): MessageInterface;
+    public function setRegion(string $region);
 
     /**
      * Returns the message sender.
@@ -53,7 +53,7 @@ interface MessageInterface
      * @param string|null $from sender phone number.
      * @return $this self reference.
      */
-    public function setFrom(string $from = null): MessageInterface;
+    public function setFrom(string $from = null);
 
     /**
      * Returns the message recipient(s).
@@ -67,27 +67,27 @@ interface MessageInterface
      * You may pass an array of numbers if multiple recipients should receive this message.
      * @return $this self reference.
      */
-    public function setTo($to): MessageInterface;
+    public function setTo($to);
 
     /**
      * Returns the message subject.
      * @return string the message subject
      */
-    public function getSubject(): string;
+    public function getSubject();
 
     /**
      * Sets the message subject.
      * @param string $subject message subject
      * @return $this self reference.
      */
-    public function setSubject(string $subject): MessageInterface;
+    public function setSubject(string $subject);
 
     /**
      * Sets message plain text content.
      * @param string $text message plain text content.
      * @return $this self reference.
      */
-    public function setBody(string $text): MessageInterface;
+    public function setBody(string $text);
 
     /**
      * Sends this sms message.
@@ -95,11 +95,11 @@ interface MessageInterface
      * If null, the "smsProvider" application component will be used instead.
      * @return boolean whether this message is sent successfully.
      */
-    public function send(ProviderInterface $provider = null): bool;
+    public function send(ProviderInterface $provider = null);
 
     /**
      * Returns string representation of this message.
      * @return string the string representation of this message.
      */
-    public function toString(): string;
+    public function toString();
 }

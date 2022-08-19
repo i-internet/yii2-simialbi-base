@@ -7,7 +7,6 @@
 
 namespace simialbi\yii2\models;
 
-use yii\db\ActiveQuery;
 use yii\web\IdentityInterface;
 
 /**
@@ -79,45 +78,33 @@ interface UserInterface extends IdentityInterface
 {
     /**
      * Returns a list of users that can be used in assignments
-     *
      * @return static[]
-     * @see ActiveQuery::where()
      */
-    public static function findIdentities(): array;
-
-    /**
-     * Return a list of users thant can be used in assignments filtered by ids.
-     *
-     * @param array $ids The ids of the users to find
-     *
-     * @return static[]
-     * @since 0.13.0
-     */
-    public static function findIdentitiesByIds(array $ids): array;
+    public static function findIdentities();
 
     /**
      * Returns a users profile image.
      * @return string|null A users profile image.
      */
-    public function getImage(): ?string;
+    public function getImage();
 
     /**
      * Returns a users name (first and last name or username).
      * @return string|null A users name.
      */
-    public function getName(): ?string;
+    public function getName();
 
     /**
      * Returns a users email address
-     * @retun string|null
+     * @retun string
      * @since 0.8.0
      */
-    public function getEmail(): ?string;
+    public function getEmail();
 
     /**
      * Returns a users mobile phone number (international format e.g. +41791234567)
      * @return string|null
      * @since 0.10.1
      */
-    public function getMobile(): ?string;
+    public function getMobile();
 }

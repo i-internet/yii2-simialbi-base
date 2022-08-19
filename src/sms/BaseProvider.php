@@ -94,16 +94,16 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      */
     private $_view = [];
     /**
-     * @var string|null the directory containing view files for composing mail messages.
+     * @var string the directory containing view files for composing mail messages.
      */
-    private $_viewPath = null;
-    private $_message = null;
+    private $_viewPath;
+    private $_message;
 
     /**
      * {@inheritDoc}
      * @throws InvalidConfigException
      */
-    public function compose(string $view = null, array $params = []): MessageInterface
+    public function compose($view = null, array $params = [])
     {
         $message = $this->createMessage();
         if ($view === null) {
@@ -135,7 +135,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @return MessageInterface message instance.
      * @throws InvalidConfigException
      */
-    protected function createMessage(): MessageInterface
+    protected function createMessage()
     {
         $config = $this->messageConfig;
         if (!array_key_exists('class', $config)) {
@@ -155,7 +155,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @return string the rendering result.
      * @throws InvalidConfigException
      */
-    public function render(string $view, array $params = [], $layout = false): string
+    public function render($view, $params = [], $layout = false)
     {
         $output = $this->getView()->render($view, $params, $this);
         if ($layout !== false) {
@@ -169,7 +169,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @return View view instance.
      * @throws InvalidConfigException
      */
-    public function getView(): View
+    public function getView()
     {
         if (!is_object($this->_view)) {
             $this->_view = $this->createView($this->_view);
@@ -181,11 +181,9 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
     /**
      * @param array|View $view view instance or its array configuration that will be used to
      * render message bodies.
-     *
-     * @return void
      * @throws InvalidConfigException on invalid argument.
      */
-    public function setView($view): void
+    public function setView($view)
     {
         if (!is_array($view) && !is_object($view)) {
             throw new InvalidConfigException('"' . get_class($this) . '::view" should be either object or configuration array, "' . gettype($view) . '" given.');
@@ -199,7 +197,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @return View view instance.
      * @throws InvalidConfigException
      */
-    protected function createView(array $config): View
+    protected function createView(array $config)
     {
         if (!array_key_exists('class', $config)) {
             $config['class'] = View::class;
@@ -218,7 +216,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @param array $messages list of email messages, which should be sent.
      * @return integer number of messages that are successfully sent.
      */
-    public function sendMultiple(array $messages): int
+    public function sendMultiple(array $messages)
     {
         $successCount = 0;
         foreach ($messages as $message) {
@@ -233,7 +231,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
     /**
      * {@inheritDoc}
      */
-    public function send(MessageInterface $message): bool
+    public function send(MessageInterface $message)
     {
         if (!$this->beforeSend($message)) {
             return false;
@@ -262,7 +260,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @param MessageInterface $message
      * @return boolean whether to continue sending an email.
      */
-    public function beforeSend(MessageInterface $message): bool
+    public function beforeSend(MessageInterface $message)
     {
         $event = new SMSEvent(['message' => $message]);
         $this->trigger(self::EVENT_BEFORE_SEND, $event);
@@ -275,7 +273,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @param MessageInterface $message
      * @return boolean whether the message is saved successfully
      */
-    protected function saveMessage(MessageInterface $message): bool
+    protected function saveMessage(MessageInterface $message)
     {
         $path = Yii::getAlias($this->fileTransportPath);
         if (!is_dir($path)) {
@@ -294,7 +292,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
     /**
      * @return string the file name for saving the message when [[useFileTransport]] is true.
      */
-    public function generateMessageFileName(): string
+    public function generateMessageFileName()
     {
         $time = microtime(true);
 
@@ -307,7 +305,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @param MessageInterface $message the message to be sent
      * @return boolean whether the message is sent successfully
      */
-    abstract protected function sendMessage(MessageInterface $message): bool;
+    abstract protected function sendMessage(MessageInterface $message);
 
     /**
      * This method is invoked right after mail was send.
@@ -326,7 +324,7 @@ abstract class BaseProvider extends Component implements ProviderInterface, View
      * @return string the directory that contains the view files for composing mail messages
      * Defaults to '@app/sms'.
      */
-    public function getViewPath(): ?string
+    public function getViewPath()
     {
         if ($this->_viewPath === null) {
             $this->setViewPath('@app/sms');

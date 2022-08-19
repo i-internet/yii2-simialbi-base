@@ -37,14 +37,14 @@ interface ProviderInterface
      * @param array $params the parameters (name-value pairs) that will be extracted and made available in the view file.
      * @return MessageInterface message instance.
      */
-    public function compose(string $view = null, array $params = []): MessageInterface;
+    public function compose($view = null, array $params = []);
 
     /**
      * Sends the given sms message.
      * @param MessageInterface $message sms message instance to be sent
      * @return boolean whether the message has been sent successfully
      */
-    public function send(MessageInterface $message): bool;
+    public function send(MessageInterface $message);
 
     /**
      * Sends multiple messages at once.
@@ -54,5 +54,5 @@ interface ProviderInterface
      * @param array $messages list of sms messages, which should be sent.
      * @return integer number of messages that are successfully sent.
      */
-    public function sendMultiple(array $messages): int;
+    public function sendMultiple(array $messages);
 }
